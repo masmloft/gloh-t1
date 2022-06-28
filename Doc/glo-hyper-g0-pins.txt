@@ -1,0 +1,24 @@
+stm32g031C8U6
+
+SM034N06L2 - 2 * MOSFET
+
+----------------------------------------
+PB0 - EnPower
+
+PC7 - diode1
+PB0 - diode2
+PB1 - diode3
+PC6 - diode4
+
+PC13 - button1
+
+PA10 - uart1_rx
+PA9 -  uart1_tx
+
+PA6 - temp_sensor_1
+PA7 - temp_sensor_2
+
+PA15 - Mosfet_1
+PA12 - Mosfet_2
+PA11 - Mosfet_2 ???
+----------------------------------------
