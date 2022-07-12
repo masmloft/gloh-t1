@@ -71,7 +71,9 @@ static int bq2589x_adc_start(uint8_t oneshot)
 		//	else
 		if ((val & (1 << 6)) == 0)
 		{
-			HAL_StatusTypeDef res = bq2589x_update_bits(0x02, 1 << 7, 1 << 7);
+			uint8_t mask = (1 << 7) | (1 << 6);
+			uint8_t val = (1 << 7) | (1 << 6);
+			HAL_StatusTypeDef res = bq2589x_update_bits(0x02, mask, val);
 			if(res != HAL_OK)
 				return res;
 			res = bq2589x_update_bits(0x02, 0x40, 1 << 6);
@@ -93,7 +95,8 @@ static int bq2589x_adc_start(uint8_t oneshot)
 static int bq2589x_adc_read_battery_volt()
 {
 	uint8_t rxVal;
-	HAL_StatusTypeDef res = bq2589x_read_reg(0x0E, &rxVal);
+//	HAL_StatusTypeDef res = bq2589x_read_reg(0x0E, &rxVal);
+	HAL_StatusTypeDef res = bq2589x_read_reg(0x0F, &rxVal);
 	if(res != HAL_OK)
 		return 0;
 	int val = 2304 + ((rxVal & 0x7F) >> 0) * 20;
