@@ -57,28 +57,28 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define button1_Pin GPIO_PIN_13
-#define button1_GPIO_Port GPIOC
-#define temp1_Pin GPIO_PIN_6
-#define temp1_GPIO_Port GPIOA
-#define temp2_Pin GPIO_PIN_7
-#define temp2_GPIO_Port GPIOA
-#define D2_Pin GPIO_PIN_0
-#define D2_GPIO_Port GPIOB
-#define D3_Pin GPIO_PIN_1
-#define D3_GPIO_Port GPIOB
-#define D4_Pin GPIO_PIN_6
-#define D4_GPIO_Port GPIOC
-#define D1_low_Pin GPIO_PIN_7
-#define D1_low_GPIO_Port GPIOC
-#define polevoi_2_Pin GPIO_PIN_11
-#define polevoi_2_GPIO_Port GPIOA
-#define polevoi_2A12_Pin GPIO_PIN_12
-#define polevoi_2A12_GPIO_Port GPIOA
-#define polevoi_1_Pin GPIO_PIN_15
-#define polevoi_1_GPIO_Port GPIOA
-#define EnPower_low_Pin GPIO_PIN_8
-#define EnPower_low_GPIO_Port GPIOB
+#define GLO_BUTTON1_Pin GPIO_PIN_13
+#define GLO_BUTTON1_GPIO_Port GPIOC
+#define GLO_TEMPR1_Pin GPIO_PIN_6
+#define GLO_TEMPR1_GPIO_Port GPIOA
+#define GLO_TEMPR2_Pin GPIO_PIN_7
+#define GLO_TEMPR2_GPIO_Port GPIOA
+#define GLO_LED2_Pin GPIO_PIN_0
+#define GLO_LED2_GPIO_Port GPIOB
+#define GLO_LED3_Pin GPIO_PIN_1
+#define GLO_LED3_GPIO_Port GPIOB
+#define GLO_LED4_Pin GPIO_PIN_6
+#define GLO_LED4_GPIO_Port GPIOC
+#define GLO_LED1_Pin GPIO_PIN_7
+#define GLO_LED1_GPIO_Port GPIOC
+#define GLO_POLEV2_2_Pin GPIO_PIN_11
+#define GLO_POLEV2_2_GPIO_Port GPIOA
+#define GLO_POLEV2_Pin GPIO_PIN_12
+#define GLO_POLEV2_GPIO_Port GPIOA
+#define GLO_POLEV1_Pin GPIO_PIN_15
+#define GLO_POLEV1_GPIO_Port GPIOA
+#define GLO_EH_POWER_Pin GPIO_PIN_8
+#define GLO_EH_POWER_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

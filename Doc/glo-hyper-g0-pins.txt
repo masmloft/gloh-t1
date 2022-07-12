@@ -1,6 +1,7 @@
 stm32g031C8U6
 
-BQ25898 - контроллер заряда
+BQ25898D - контроллер заряда
+I2C Slave Address: 6AH (1101010B + R/W) (bq25898D)
 
 SM034N06L2 - 2 * MOSFET
 
@@ -24,3 +25,49 @@ PA15 - Mosfet_1
 PA12 - Mosfet_2
 PA11 - Mosfet_2 ???
 ----------------------------------------
+
+GLO Hyper(G402)
+РАСПИНОВКА SWD-интерфейса на печатной плате по порядку: NRST(квадратный), DAT(круглый), CLK(круглый), +Vdd(круглый), -Vss/GND(круглый)
+
+Connected via SWD.
+SWD Frequency = 4,0 MHz.
+Connection mode : Connect Under Reset.
+Debug in Low Power mode enabled.
+
+Device ID:0x466
+Device flash Size : 64KBytes
+Device family :STM32G0 rev Z
+0x08000000:0x08010000 Memory Checksum: 0x005FEC61
+
+
+маркировка CPU: STM32G 031C8U6 GQ24Q1S9R
+про МК:Mainstream Arm Cortex-M0+ MCU with 64 Kbytes of Flash memory, 8 Kbytes RAM,
+подробнее тут: https://www.st.com/en/…ssors/stm32g031c8.html
+QR-код на CPU: H08MM1600J2F
+
+маркировка 2х силовых транзисторов: 66644 GA0615
+контроллер зарядки аккумулятора: BQ25898( https://www.ti.com/product/BQ25898 )
+
+прошивка(Main Flash) и конфиг-биты в архиве my_new_glo.rar(прошивка в .bin формате).
+...также считал по отдельным сегментам всю память устройства в архив segments-glo.rar.
+Всё считано STM32 ST-LINK Utility.
+
+p.s. рядом с SWD пинами, есть еще два пина( квадрый=RX, круглый=TX относительно земли). с них можно прочитать debug-данные. я считывал Лог.анализатором USART 921600 Baud (8/1/N) уровень сигнала=2.5вольт.
+
+терминальный вывод:
+
+*** soft version: HYPER3 LV 2020.11.03.1
+*** factory_PSN: H08MM1600J2F
+*** product_SN: There is no product_SN
+wakpe up,1190746178
+USB plug in
+USB plug_out
+go into shutdown
+
+...т.е. он просыпается, пишет о подключении, затем я вытыкаю юсб-разъем, он пишет о разъединении, и через несколько секунд уходит в сон.
+
+P.P.S. я полностью стёр память контроллера(по сути - отформатировал), а затем прошил выложенной прошивкой ...той, что в архиве segments: файл - Main_Flash_memory(0x8000000-0x8010000).bin
+=> никаких защищённых от считывания\записи блоков - нет.
+устройства после всего этого - работает нормально(я после всего - покурил))))
+
+-----------------------------------------------------

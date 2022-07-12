@@ -22,6 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "../../test1/test1_app.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +43,8 @@
 /* Private variables ---------------------------------------------------------*/
  ADC_HandleTypeDef hadc1;
 
+I2C_HandleTypeDef hi2c1;
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -52,6 +56,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -91,15 +96,15 @@ int main(void)
   MX_GPIO_Init();
   MX_ADC1_Init();
   MX_USART1_UART_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
 
-  size_t iter = 0;
+  app_main();
 
   while (1)
   {
@@ -108,45 +113,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-
-/*
-	  if(iter % 1 == 0)
-		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_7);
-	  if(iter % 2 == 0)
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-	  if(iter % 4 == 0)
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
-	  if(iter % 8 == 0)
-	  	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
-*/
-
-	  {
-		  GPIO_PinState b = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
-		  if(b == GPIO_PIN_SET)
-		  {
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
-			  continue;
-		  }
-	  }
-
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
-
-	  if(iter % 4 == 0)
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
-	  if(iter % 4 == 1)
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
-	  if(iter % 4 == 2)
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_RESET);
-	  if(iter % 4 == 3)
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
-
-
-	  HAL_Delay(500);
-
-	  iter++;
   }
   /* USER CODE END 3 */
 }
@@ -250,6 +216,54 @@ static void MX_ADC1_Init(void)
 }
 
 /**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.Timing = 0x00303D5B;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Analogue filter
+  */
+  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c1, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Digital filter
+  */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
+}
+
+/**
   * @brief USART1 Initialization Function
   * @param None
   * @retval None
@@ -312,36 +326,36 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, D2_Pin|D3_Pin|EnPower_low_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GLO_LED2_Pin|GLO_LED3_Pin|GLO_EH_POWER_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, D4_Pin|D1_low_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GLO_LED4_Pin|GLO_LED1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, polevoi_2_Pin|polevoi_2A12_Pin|polevoi_1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GLO_POLEV2_2_Pin|GLO_POLEV2_Pin|GLO_POLEV1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : button1_Pin */
-  GPIO_InitStruct.Pin = button1_Pin;
+  /*Configure GPIO pin : GLO_BUTTON1_Pin */
+  GPIO_InitStruct.Pin = GLO_BUTTON1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(button1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GLO_BUTTON1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D2_Pin D3_Pin EnPower_low_Pin */
-  GPIO_InitStruct.Pin = D2_Pin|D3_Pin|EnPower_low_Pin;
+  /*Configure GPIO pins : GLO_LED2_Pin GLO_LED3_Pin GLO_EH_POWER_Pin */
+  GPIO_InitStruct.Pin = GLO_LED2_Pin|GLO_LED3_Pin|GLO_EH_POWER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D4_Pin D1_low_Pin */
-  GPIO_InitStruct.Pin = D4_Pin|D1_low_Pin;
+  /*Configure GPIO pins : GLO_LED4_Pin GLO_LED1_Pin */
+  GPIO_InitStruct.Pin = GLO_LED4_Pin|GLO_LED1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : polevoi_2_Pin polevoi_2A12_Pin polevoi_1_Pin */
-  GPIO_InitStruct.Pin = polevoi_2_Pin|polevoi_2A12_Pin|polevoi_1_Pin;
+  /*Configure GPIO pins : GLO_POLEV2_2_Pin GLO_POLEV2_Pin GLO_POLEV1_Pin */
+  GPIO_InitStruct.Pin = GLO_POLEV2_2_Pin|GLO_POLEV2_Pin|GLO_POLEV1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
