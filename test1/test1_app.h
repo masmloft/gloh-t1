@@ -1,9 +1,8 @@
 #pragma once
 
-extern I2C_HandleTypeDef hi2c1;
-
-
 #define BQ2589X_I2C_ADDR (0x6A << 1)
+
+extern I2C_HandleTypeDef hi2c1;
 
 
 static HAL_StatusTypeDef bq2589x_read_reg(uint8_t regNum, uint8_t* regData)
