@@ -1,11 +1,13 @@
 #pragma once
 
+#include "glo_uart.h"
 #include "glo_leds.h"
 #include "glo_bq25898d.h"
 
 
 static void app_main()
 {
+	glo_uart_write_str("start\r\n");
 	glo_leds_set_leds(0b1111, 0);
 
 //	glo_leds_set_led(0, 1);
@@ -23,18 +25,25 @@ static void app_main()
 
 	while (1)
 	{
-		{
-			HAL_StatusTypeDef res = HAL_I2C_IsDeviceReady(&hi2c1, 0x6A << 1, 1, HAL_MAX_DELAY);
-			if(res == HAL_OK)
-				glo_leds_set_led(1, 1);
-			else
-				glo_leds_set_led(1, 0);
-		}
+//		{
+//			HAL_StatusTypeDef res = HAL_I2C_IsDeviceReady(&hi2c1, 0x6A << 1, 1, HAL_MAX_DELAY);
+//			if(res == HAL_OK)
+//				glo_leds_set_led(1, 1);
+//			else
+//				glo_leds_set_led(1, 0);
+//		}
 
 		{
 			bq2589x_adc_start(0);
 			int vbat = bq2589x_adc_read_battery_volt();
 			int tbat = bq2589x_adc_read_temperature();
+
+			glo_uart_write_str("vbat = ");
+			glo_uart_write_int(vbat);
+			glo_uart_write_str(" tbat = ");
+			glo_uart_write_int(tbat);
+			glo_uart_write_str("\r\n");
+
 			if(vbat > 3000 || tbat > 21000)
 			{
 				glo_leds_set_led(2, 1);
