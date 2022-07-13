@@ -15,7 +15,7 @@ static void glo_leds_set_led(int led_num, int is_on)
 		HAL_GPIO_WritePin(GLO_LED3_GPIO_Port, GLO_LED3_Pin, pin_state);
 }
 
-static void glo_leds_set_leds(int led_mask, int is_on)
+static void glo_leds_set_leds(uint8_t led_mask, int is_on)
 {
 	GPIO_PinState pin_state = (is_on) ? GPIO_PIN_RESET : GPIO_PIN_SET;
 	if(led_mask & 0b0001)

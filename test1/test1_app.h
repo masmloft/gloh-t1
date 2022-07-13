@@ -44,23 +44,45 @@ static void app_main()
 			glo_uart_write_int(tbat);
 			glo_uart_write_str("\r\n");
 
-			if(vbat > 3000 || tbat > 21000)
+//			if(vbat > 3000 || tbat > 21000)
+//			{
+//				glo_leds_set_led(2, 1);
+//			}
+//			else
+//			{
+//				glo_leds_set_led(2, 0);
+//			}
+
 			{
-				glo_leds_set_led(2, 1);
-			}
-			else
-			{
-				glo_leds_set_led(2, 0);
+				int v = vbat - 3000;
+				v /= 1000 / 4;
+				if(v < 1)
+					v = 1;
+				if(v > 4)
+					v = 4;
+				uint8_t leds = 0;
+				switch(v)
+				{
+				case 4:
+					leds |= 0b1000;
+				case 3:
+					leds |= 0b0100;
+				case 2:
+					leds |= 0b0010;
+				case 1:
+					leds |= 0b001;
+				}
+				glo_leds_set_leds(~leds, 0);
+				glo_leds_set_leds(leds, 1);
 			}
 		}
 
 		{
-			GPIO_PinState b = HAL_GPIO_ReadPin(GLO_BUTTON1_GPIO_Port, GLO_BUTTON1_Pin);
-			if(b == GPIO_PIN_SET)
-				glo_leds_set_led(0, 1);
-			else
-				glo_leds_set_led(0, 0);
-
+//			GPIO_PinState b = HAL_GPIO_ReadPin(GLO_BUTTON1_GPIO_Port, GLO_BUTTON1_Pin);
+//			if(b == GPIO_PIN_SET)
+//				glo_leds_set_led(0, 1);
+//			else
+//				glo_leds_set_led(0, 0);
 		}
 
 //		HAL_GPIO_WritePin(GLO_LED1_GPIO_Port, GLO_LED1_Pin, GPIO_PIN_SET);
