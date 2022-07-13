@@ -56,7 +56,16 @@ static HAL_StatusTypeDef bq2589x_disable_watchdog_timer()
 	return bq2589x_update_bits(0x07, 0x30, val);
 }
 
-static int bq2589x_adc_start(uint8_t oneshot)
+static HAL_StatusTypeDef bq2589x_set_minimum_system_voltage_limit()
+{
+	uint8_t mask = 0b1111;
+	uint8_t val = (0 << 3) | (0 << 2) | (0 << 1);
+	val |= (1 << 0);
+	HAL_StatusTypeDef res = bq2589x_update_bits(0x03, mask, val);
+	return res;
+}
+
+static HAL_StatusTypeDef bq2589x_adc_start(uint8_t oneshot)
 {
 	uint8_t val;
 	HAL_StatusTypeDef res = bq2589x_read_reg(0x02, &val);
@@ -76,18 +85,15 @@ static int bq2589x_adc_start(uint8_t oneshot)
 			HAL_StatusTypeDef res = bq2589x_update_bits(0x02, mask, val);
 			if(res != HAL_OK)
 				return res;
-			res = bq2589x_update_bits(0x02, 0x40, 1 << 6);
-			if(res != HAL_OK)
-				return res;
 		}
 	}
 
-	{
-		uint8_t val;
-		HAL_StatusTypeDef res = bq2589x_read_reg(0x02, &val);
-		if(res != HAL_OK)
-			return res;
-	}
+//	{
+//		uint8_t val;
+//		HAL_StatusTypeDef res = bq2589x_read_reg(0x02, &val);
+//		if(res != HAL_OK)
+//			return res;
+//	}
 
 	return HAL_OK;
 }

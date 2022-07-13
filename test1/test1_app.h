@@ -19,6 +19,8 @@ static void app_main()
 
 	bq2589x_disable_watchdog_timer();
 
+	bq2589x_set_minimum_system_voltage_limit();
+
 	while (1)
 	{
 		{
