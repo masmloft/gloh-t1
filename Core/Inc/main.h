@@ -71,9 +71,7 @@ void Error_Handler(void);
 #define GLO_LED0_GPIO_Port GPIOC
 #define GLO_LED1_Pin GPIO_PIN_7
 #define GLO_LED1_GPIO_Port GPIOC
-#define GLO_POLEV2_2_Pin GPIO_PIN_11
-#define GLO_POLEV2_2_GPIO_Port GPIOA
-#define GLO_POLEV2_Pin GPIO_PIN_12
+#define GLO_POLEV2_Pin GPIO_PIN_11
 #define GLO_POLEV2_GPIO_Port GPIOA
 #define GLO_POLEV1_Pin GPIO_PIN_15
 #define GLO_POLEV1_GPIO_Port GPIOA

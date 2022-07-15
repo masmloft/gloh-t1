@@ -1,5 +1,5 @@
 
-stm32g031C8U6
+STM32G031C8U6
 
 BQ25898D - контроллер заряда
 I2C Slave Address: 6AH (1101010B + R/W) (bq25898D)
